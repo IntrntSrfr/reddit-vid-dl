@@ -12,8 +12,9 @@ def validate_link(link: str) -> bool:
     return True
 
 
-def validate_json(j: str):
+def validate_json(j: str) -> bool:
     pass
+
 
 def get_media_links(url: str) -> tuple[str, str, str]:
     link_json = url + '.json'
@@ -61,9 +62,9 @@ def download(url: str, **kwargs) -> None:
     os.system('ffmpeg -i {} -i {} -c copy {}'.format(video_url, audio_url, out))
 
 
-test_case = "https://reddit.com/r/PublicFreakout/comments/oey7po/iranian_woman_not_wearing_a_hijab_is_harrassed_by/"
-
-if __name__ == '__main__':
+def main():
+    if len(sys.argv) < 2:
+        return
     inp_url = sys.argv[1]
     f = ''
     if len(sys.argv) >= 3:
@@ -72,7 +73,11 @@ if __name__ == '__main__':
     if not f.endswith('.mp4'):
         f += '.mp4'
 
+    try:
         download(inp_url, outfile='weed.mp4')
-    #try:
-    #except Exception as e:
-    #    print(e)
+    except Exception as e:
+        print(e)
+
+
+if __name__ == '__main__':
+    main()
